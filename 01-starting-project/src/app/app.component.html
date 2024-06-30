@@ -5,6 +5,8 @@
             <li>
                 <app-user [user]="users[$index]"/>
             </li>
+        } @empty {
+            <p>No users found.</p>
         }
     </ul>
 
