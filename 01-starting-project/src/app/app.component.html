@@ -2,11 +2,11 @@
 <main>
     <ul id="users">
         @for (user of users; track $index) {
-            <li>
-                <app-user [user]="users[$index]"/>
-            </li>
+        <li>
+            <app-user (select)="onSelectUser($event)" [user]="users[$index]" />
+        </li>
         } @empty {
-            <p>No users found.</p>
+        <p>No users found.</p>
         }
     </ul>
 
