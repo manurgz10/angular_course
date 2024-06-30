@@ -1,5 +1,10 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, Input, computed, signal } from '@angular/core';
 import { DUMMY_USERS } from '../dummy-users';
+
+interface User {
+  name: string;
+  avatar: string;
+}
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -8,17 +13,13 @@ import { DUMMY_USERS } from '../dummy-users';
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  selectedUser = signal(DUMMY_USERS[0]);
+  @Input({
+    required: true,
+  }) user!: User;
 
-  // Así se haría con signals.
+  get imagePath() {
+    return 'assets/users/' + this.user.avatar;
+  }
+   
 
-  imagePath = computed(() => {
-    return 'assets/users/' + this.selectedUser().avatar;
-  });
-
-  // Manera tradicional
-
-  // get imagePath() {
-  //   return 'assets/users/' + this.selectedUser.avatar;
-  // }
 }
