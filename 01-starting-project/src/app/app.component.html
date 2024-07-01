@@ -3,7 +3,7 @@
     <ul id="users">
         @for (user of users; track user.id) {
         <li>
-            <app-user (select)="onSelectUser($event)" [user]="users[$index]" />
+            <app-user (select)="onSelectUser($event)" [selected]="user.id === idUser" [user]="users[$index]" />
         </li>
         } @empty {
         <p>No users found.</p>
