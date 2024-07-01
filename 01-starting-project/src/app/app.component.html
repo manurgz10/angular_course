@@ -1,7 +1,7 @@
 <app-header />
 <main>
     <ul id="users">
-        @for (user of users; track $index) {
+        @for (user of users; track user.id) {
         <li>
             <app-user (select)="onSelectUser($event)" [user]="users[$index]" />
         </li>
@@ -9,5 +9,10 @@
         <p>No users found.</p>
         }
     </ul>
-
+    @if (idUser) {
+        <app-tasks [id]="idUser"/>
+    }
+    @else {
+        <p id="fallback">Selecciona un usuario para ver sus tareas.</p>
+    }
 </main>
