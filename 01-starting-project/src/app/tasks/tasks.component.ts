@@ -1,13 +1,15 @@
 import { Component, input } from '@angular/core';
 import { DUMMY_USERS } from '../dummy-users';
 import { TaskComponent } from '../task/task.component';
+import { NewTaskComponent } from './new-task/new-task.component';
+import { NewTaskData } from '../task/task.model';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [TaskComponent],
+  imports: [TaskComponent, NewTaskComponent],
   templateUrl: './tasks.component.html',
-  styleUrl: './tasks.component.css'
+  styleUrl: './tasks.component.css',
 })
 export class TasksComponent {
   id = input<string>();
@@ -36,21 +38,40 @@ export class TasksComponent {
       dueDate: '2024-06-15',
     },
   ];
+  isAddingTask = false;
 
-  get selectedUser() { 
-    return DUMMY_USERS.find(user => user.id === this.id())?.name!;
+  get selectedUser() {
+    return DUMMY_USERS.find((user) => user.id === this.id())?.name!;
   }
 
   get selectedId() {
-    return DUMMY_USERS.find(user => user.id === this.id())?.id!;
+    return DUMMY_USERS.find((user) => user.id === this.id())?.id!;
   }
 
   get userTasks() {
-    return this.tasks.filter(task => task.userId === this.selectedId);
+    return this.tasks.filter((task) => task.userId === this.selectedId);
   }
 
   onCompleteTask(id: string) {
-    this.tasks = this.tasks.filter(task => task.id !== id);
+    this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
+  startAddingTask() {
+    this.isAddingTask = true;
+  }
+
+  onCancelAddingTask() {
+    this.isAddingTask = false;
+  }
+
+  onAddTask(task: NewTaskData) {
+    this.tasks.push({
+      id: Math.random().toString(),
+      userId: this.selectedId,
+      title: task.title,
+      summary: task.summary,
+      dueDate: task.date,
+    });
+    this.isAddingTask = false;
+  }
 }
