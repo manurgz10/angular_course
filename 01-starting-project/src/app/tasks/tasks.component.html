@@ -12,7 +12,9 @@
     <ul>
         @for (task of userTasks; track task.id) {
         <li>
-            <app-task [task]="task" (complete)="onCompleteTask($event)" />
+            <app-card>
+                <app-task [task]="task" (complete)="onCompleteTask($event)" />
+            </app-card>
         </li>
         }
         @empty {
@@ -22,6 +24,6 @@
         }
     </ul>
     @if (isAddingTask) {
-        <app-new-task (cancel)="onCancelAddingTask()" (add)="onAddTask($event)" />
+    <app-new-task (cancel)="onCancelAddingTask()" (add)="onAddTask($event)" />
     }
 </section>
