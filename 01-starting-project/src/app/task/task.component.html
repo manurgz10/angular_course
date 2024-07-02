@@ -1,15 +1,15 @@
 <article>
     <h2>
-        {{task()?.title}}
+        {{task().title}}
     </h2>
     <time>
-        {{task()?.dueDate}}
+        {{task().dueDate}}
     </time>
     <p>
-        {{task()?.summary}}
+        {{task().summary}}
     </p>
     <p class="actions">
-        <button>
+        <button (click)="onComplete()">
             Completed
         </button>
     </p>
