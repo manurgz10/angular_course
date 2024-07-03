@@ -10,10 +10,10 @@
         </menu>
     </header>
     <ul>
-        @for (task of userTasks; track task.id) {
+        @for (task of selectedUserTasks; track task.id) {
         <li>
             <app-card>
-                <app-task [task]="task" (complete)="onCompleteTask($event)" />
+                <app-task [task]="task" />
             </app-card>
         </li>
         }
@@ -24,6 +24,6 @@
         }
     </ul>
     @if (isAddingTask) {
-    <app-new-task (cancel)="onCancelAddingTask()" (add)="onAddTask($event)" />
+    <app-new-task [id]="selectedId" (close)="onCloseAddTask()" />
     }
 </section>

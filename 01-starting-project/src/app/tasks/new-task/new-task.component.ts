@@ -1,33 +1,39 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, inject, output, signal, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NewTaskData } from '../../task/task.model';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './new-task.component.html',
-  styleUrl: './new-task.component.css'
+  styleUrl: './new-task.component.css',
 })
 export class NewTaskComponent {
-  cancel = output<void>();
-  add = output<NewTaskData>();
+  close = output<void>();
+  id = input.required<string>();
+  private tasksService = inject(TasksService);
 
   newTask = {
     enteredTitle: signal(''),
     enteredSummary: signal(''),
-    enteredDueDate: signal('')
-  }
+    enteredDueDate: signal(''),
+  };
 
   onCancel() {
-    this.cancel.emit();
+    this.close.emit();
   }
 
   onSubmit() {
-    this.add.emit({
-      title: this.newTask.enteredTitle(),
-      summary: this.newTask.enteredSummary(),
-      date: this.newTask.enteredDueDate()
-    });
+    this.tasksService.addTask(
+      {
+        title: this.newTask.enteredTitle(),
+        summary: this.newTask.enteredSummary(),
+        date: this.newTask.enteredDueDate(),
+      },
+      this.id()
+    );
+    this.close.emit();
   }
 }
